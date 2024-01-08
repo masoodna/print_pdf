@@ -1,0 +1,29 @@
+https://stackoverflow.com/questions/77766382/after-changing-default-printer-and-then-using-win32api-shellexecute-all-prints-s?noredirect=1#comment137102190_77766382
+
+def printfile(filename):
+    while True:
+        printername=input("printername:")
+        import win32print,time,win32api
+        try:
+
+            global defaultPrinter
+            defaultPrinter=None
+            defaultPrinter = win32print.GetDefaultPrinter()
+            if defaultPrinter != printername:
+                time.sleep(0.5)
+                win32print.SetDefaultPrinter(printername)
+            time.sleep(0.5)
+                
+            win32api.ShellExecute (
+            0,
+            "print",
+            filename,
+            None, ".", 0)       
+            
+            time.sleep(3)
+            
+            win32print.SetDefaultPrinter(defaultPrinter)
+        except Exception as err:
+            print(err)
+        
+printfile('Black.pdf')
